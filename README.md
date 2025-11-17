@@ -3,4 +3,4 @@
 
 ## ドキュメント
 
-- [花札仕様書](docs/hanafuda-specification.md) - 花札のルール、札の構成、役、ゲーム進行方法の完全な仕様書
+- [こいこい仕様書](docs/hanafuda-specification.md) - こいこいのルール、札の構成、役、ゲーム進行方法の完全な仕様書
