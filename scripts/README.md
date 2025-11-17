@@ -4,13 +4,55 @@
 
 ## 📋 スクリプト
 
+### `create_issues.sh` ⭐ 推奨
+
+30個の実装Issueを一括作成するBashスクリプトです（GitHub CLI使用）。
+
 ### `create_issues.py`
 
-30個の実装Issueを一括作成するPythonスクリプトです。
+30個の実装Issueを一括作成するPythonスクリプトです（GitHub API使用）。
 
 ## 🚀 使用方法
 
-### 1. 前提条件
+### 方法1: GitHub CLI使用（推奨）
+
+#### 1. 前提条件
+
+以下が完了していることを確認してください：
+
+- GitHub CLI (gh) がインストールされていること
+- `gh auth login` で認証済みであること
+- マイルストーンが作成されていること（M1, M2, M3, M4）
+- ラベルが作成されていること（詳細は `docs/GITHUB-SETUP-CHECKLIST.md` を参照）
+
+#### 2. GitHub CLI のセットアップ
+
+```bash
+# GitHub CLI のインストール確認
+gh --version
+
+# 認証（まだの場合）
+gh auth login
+```
+
+#### 3. スクリプトの実行
+
+```bash
+# リポジトリのルートディレクトリで実行
+./scripts/create_issues.sh
+```
+
+または:
+
+```bash
+# scriptsディレクトリ内で実行
+cd scripts
+./create_issues.sh
+```
+
+### 方法2: Python + GitHub API使用
+
+#### 1. 前提条件
 
 以下が完了していることを確認してください：
 
@@ -19,7 +61,7 @@
 - マイルストーンが作成されていること（M1, M2, M3, M4）
 - ラベルが作成されていること（詳細は `docs/GITHUB-SETUP-CHECKLIST.md` を参照）
 
-### 2. GitHub Personal Access Tokenの作成
+#### 2. GitHub Personal Access Tokenの作成
 
 1. GitHubの設定ページへ: https://github.com/settings/tokens
 2. "Generate new token" → "Generate new token (classic)" をクリック
@@ -28,7 +70,7 @@
 5. "Generate token" をクリック
 6. 表示されたトークンをコピー（後で見れないので注意！）
 
-### 3. 環境変数の設定
+#### 3. 環境変数の設定
 
 ```bash
 export GITHUB_TOKEN=your_personal_access_token_here
@@ -39,7 +81,7 @@ Windowsの場合:
 set GITHUB_TOKEN=your_personal_access_token_here
 ```
 
-### 4. スクリプトの実行
+#### 4. スクリプトの実行
 
 ```bash
 # リポジトリのルートディレクトリで実行
@@ -58,7 +100,7 @@ python create_issues.py
 
 スクリプトは以下を実行します：
 
-1. ✅ 環境変数のチェック
+1. ✅ GitHub CLI の認証チェック（方法1）または環境変数のチェック（方法2）
 2. 📋 マイルストーンの取得
 3. 📝 30個のIssueを順次作成
 4. 🔗 依存関係（Depends on #X）を自動設定
@@ -73,13 +115,61 @@ python create_issues.py
 ...
 ```
 
+## ⚙️ 推奨する方法
+
+**GitHub CLI (create_issues.sh) を推奨します**
+
+理由:
+- ✅ 環境変数の設定が不要（認証済みなら即実行可能）
+- ✅ GitHub CLI が標準でインストールされていることが多い
+- ✅ トークンの管理が不要
+- ✅ より簡単に実行できる
+
+Python版は以下の場合に使用:
+- GitHub CLI がインストールできない環境
+- スクリプトをカスタマイズしたい場合
+- CI/CD パイプラインで使用する場合
+
 ## ⚠️ トラブルシューティング
 
-### エラー: `GITHUB_TOKEN が設定されていません`
+### GitHub CLI 版
+
+#### エラー: `gh: command not found`
+
+GitHub CLI がインストールされていません。
+
+**解決方法:**
+```bash
+# macOS
+brew install gh
+
+# Ubuntu/Debian
+sudo apt install gh
+
+# Windows (PowerShell)
+winget install --id GitHub.cli
+```
+
+詳細: https://cli.github.com/
+
+#### エラー: `GitHub CLIが認証されていません`
+
+認証が完了していません。
+
+**解決方法:**
+```bash
+gh auth login
+```
+
+画面の指示に従って認証してください。
+
+### Python 版
+
+#### エラー: `GITHUB_TOKEN が設定されていません`
 
 環境変数が設定されていません。上記の手順3を実行してください。
 
-### エラー: `マイルストーンが見つかりません`
+#### エラー: `マイルストーンが見つかりません`
 
 マイルストーンが作成されていません。`docs/GITHUB-SETUP-CHECKLIST.md` を参照して、以下のマイルストーンを作成してください：
 
@@ -88,7 +178,7 @@ python create_issues.py
 - M3: 拡張機能実装
 - M4: リリース準備完了
 
-### エラー: `Issue作成失敗`
+#### エラー: `Issue作成失敗`
 
 考えられる原因：
 
@@ -99,12 +189,18 @@ python create_issues.py
 
 ## 📝 スクリプトの特徴
 
+### 共通機能
 - ✅ 30個のIssueを自動作成
 - ✅ 依存関係を自動設定（Depends on #X）
 - ✅ マイルストーンを自動割り当て
 - ✅ ラベルを自動割り当て
 - ✅ API rate limitを考慮した待機時間
 - ✅ エラーハンドリング
+
+### GitHub CLI版の追加利点
+- ✅ シンプルな実行（認証済みなら `./create_issues.sh` のみ）
+- ✅ トークン管理不要
+- ✅ Issue番号の自動追跡と表示
 
 ## 🔧 カスタマイズ
 
