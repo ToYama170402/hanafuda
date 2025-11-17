@@ -8,7 +8,8 @@
 - [実装仕様書](docs/implementation-specification.md) - C#ルールエンジンの技術仕様書（データモデル、API設計、実装ガイド）
 
 ### 実装計画
-- [実装ロードマップ](docs/implementation-roadmap.md) - ビジュアルで分かりやすい実装の流れ（推奨：まずこれを読む）
+- [🚀 クイックスタートガイド](docs/QUICKSTART.md) - すぐに実装を始めたい方向け（最初に読む）
+- [実装ロードマップ](docs/implementation-roadmap.md) - ビジュアルで分かりやすい実装の流れ
 - [実装計画書](docs/implementation-plan.md) - 仕様書に基づいた段階的な実装計画（30個のIssueに分解）
 - [Issue作成ガイド](docs/issues-summary.md) - GitHub Issueを作成するためのガイド
 - [仕様書と実装の対応表](docs/specification-mapping.md) - 仕様書の各セクションと実装計画の対応関係
