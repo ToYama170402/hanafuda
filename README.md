@@ -9,6 +9,7 @@
 
 ### 実装計画
 - [🚀 クイックスタートガイド](docs/QUICKSTART.md) - すぐに実装を始めたい方向け（最初に読む）
+- [✅ GitHubセットアップチェックリスト](docs/GITHUB-SETUP-CHECKLIST.md) - Issue作成前の準備作業
 - [実装ロードマップ](docs/implementation-roadmap.md) - ビジュアルで分かりやすい実装の流れ
 - [実装計画書](docs/implementation-plan.md) - 仕様書に基づいた段階的な実装計画（30個のIssueに分解）
 - [Issue作成ガイド](docs/issues-summary.md) - GitHub Issueを作成するためのガイド
@@ -18,7 +19,7 @@
 
 1. **仕様書の確認** - ゲームルールと技術仕様を理解する
 2. **実装計画の確認** - 30個のIssueに分解された実装計画を確認する
-3. **Issue作成** - GitHub Issueを作成し、Sub Issueとして関連付ける
+3. **GitHub準備** - [セットアップチェックリスト](docs/GITHUB-SETUP-CHECKLIST.md)に従ってIssueを作成
 4. **段階的な実装** - 4つのフェーズで順次実装を進める
    - フェーズ1: 基本機能（MVP）
    - フェーズ2: 完全なルール実装
@@ -27,4 +28,5 @@
 
 ## 開発状況
 
-現在、実装計画の策定が完了しました。次のステップは各Issueの作成と実装の開始です。
+✅ 実装計画の策定が完了しました  
+📋 次のステップ: [GitHubセットアップチェックリスト](docs/GITHUB-SETUP-CHECKLIST.md)に従ってIssueを作成
