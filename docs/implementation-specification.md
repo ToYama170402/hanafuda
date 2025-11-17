@@ -9,7 +9,6 @@
 - ゲームルールの実装（札の管理、ターンの進行、役判定、得点計算）
 - ゲーム状態の管理
 - プレイヤーのアクション処理
-- AI実装のためのインターフェース
 - **スコープ外**: UI、ネットワーク通信、データ永続化
 
 ### 1.3 設計原則
@@ -861,75 +860,7 @@ public sealed class DealingValidator
 }
 ```
 
-## 10. AI実装のためのインターフェース
-
-### 10.1 IGameAI（AIインターフェース）
-
-```csharp
-public interface IGameAI
-{
-    // 現在の状態から最適なアクションを選択
-    IGameAction SelectAction(GameState state, IReadOnlyList<IGameAction> availableActions);
-}
-```
-
-### 10.2 AIの実装例
-
-#### 10.2.1 ランダムAI
-
-```csharp
-public sealed class RandomAI : IGameAI
-{
-    private readonly Random _random;
-    
-    public RandomAI(int? seed = null)
-    {
-        _random = seed.HasValue ? new Random(seed.Value) : new Random();
-    }
-    
-    public IGameAction SelectAction(GameState state, IReadOnlyList<IGameAction> availableActions)
-    {
-        if (availableActions.Count == 0)
-        {
-            throw new InvalidOperationException("利用可能なアクションがありません");
-        }
-        
-        int index = _random.Next(availableActions.Count);
-        return availableActions[index];
-    }
-}
-```
-
-#### 10.2.2 評価関数ベースAI
-
-```csharp
-public sealed class EvaluationAI : IGameAI
-{
-    private readonly YakuEvaluator _yakuEvaluator;
-    
-    public IGameAction SelectAction(GameState state, IReadOnlyList<IGameAction> availableActions)
-    {
-        // 各アクションをシミュレートして評価
-        var evaluations = availableActions
-            .Select(action => (Action: action, Score: EvaluateAction(state, action)))
-            .OrderByDescending(x => x.Score)
-            .ToList();
-        
-        return evaluations.First().Action;
-    }
-    
-    private double EvaluateAction(GameState state, IGameAction action)
-    {
-        // アクション後の状態を予測
-        // 役の完成度、手札の価値、相手の状況などを評価
-        // スコアを返す
-        // 実装詳細は省略
-        return 0.0;
-    }
-}
-```
-
-## 11. テスト戦略
+## 10. テスト戦略
 
 ### 11.1 ユニットテスト
 
@@ -1093,11 +1024,6 @@ public sealed class InvalidGameStateException : Exception
 - LINQの使用は可読性とパフォーマンスのバランスを考慮
 - 必要に応じてキャッシングを導入
 
-#### 14.1.3 AI実装
-- 深い探索は計算コストが高いため、制限を設ける
-- アルファベータ剪定などの最適化手法を活用
-- タイムアウト機能の実装
-
 ## 15. 実装の優先順位
 
 ### フェーズ1: 基本機能（MVP）
@@ -1119,34 +1045,19 @@ public sealed class InvalidGameStateException : Exception
 ### フェーズ3: 拡張機能
 1. 手四（オプション）
 2. ルール設定のカスタマイズ
-3. 基本的なAI実装
-4. イベントシステム
+3. イベントシステム
 
 ### フェーズ4: 高度な機能
-1. 高度なAI実装
-2. パフォーマンス最適化
-3. 詳細なログ機能
-4. リプレイ機能
+1. パフォーマンス最適化
+2. 詳細なログ機能
+3. リプレイ機能
 
 ## 16. 今後の課題
 
 ### 16.1 実装上の課題
-- スレッドセーフ性の検討（マルチプレイヤー対応）
 - シリアライゼーション/デシリアライゼーション（保存/読込）
 - 詳細なログ機能
 - デバッグ機能の充実
-
-### 16.2 機能拡張
-- 3人以上のプレイヤー対応
-- トーナメントモード
-- オンライン対戦（スコープ外だが将来的に）
-- リプレイ機能
-- 統計情報の記録
-
-### 16.3 AI強化
-- 機械学習を用いたAI
-- 強化学習によるAIの訓練
-- 複数の難易度レベル
 
 ---
 
@@ -1200,11 +1111,6 @@ HanafudaEngine/
 │   ├── KoiKoiGame.cs
 │   ├── GameActionResult.cs
 │   └── ValidationResult.cs
-│
-├── HanafudaEngine.AI/
-│   ├── IGameAI.cs
-│   ├── RandomAI.cs
-│   └── EvaluationAI.cs
 │
 └── HanafudaEngine.Tests/
     ├── Core/
@@ -1262,7 +1168,6 @@ HanafudaEngine/
 ### C.2 C#設計パターン
 - Repository Pattern
 - Facade Pattern
-- Strategy Pattern（AI実装）
 - State Pattern（ゲーム状態管理）
 
 ### C.3 推奨ライブラリ
