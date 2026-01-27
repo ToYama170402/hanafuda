@@ -48,7 +48,7 @@ GitHubリポジトリの「Issues」タブ → 「Labels」から作成
 
 - [ ] `setup` - プロジェクトセットアップ関連（色: #0052CC）
 - [ ] `core` - Core層の実装（色: #5319E7）
-- [ ] `domain` - Domain層の実装（色: #1D76DB）
+- [ ] `domain` - Domain層の実装（色: #8D76DB）
 - [ ] `facade` - Facade層の実装（色: #0E8A16）
 - [ ] `testing` - テスト関連（色: #D93F0B）
 
@@ -60,7 +60,7 @@ GitHubリポジトリの「Issues」タブ → 「Labels」から作成
 - [ ] `events` - イベントシステム（色: #C5DEF5）
 - [ ] `documentation` - ドキュメント（色: #0075CA）
 - [ ] `ci-cd` - CI/CD関連（色: #C2E0C6）
-- [ ] `performance` - パフォーマンス最適化（色: #006B75）
+- [ ] `performance` - パフォーマンス最適化（色: #13B75）
 - [ ] `logging` - ログ機能（色: #BFD4F2）
 - [ ] `replay` - リプレイ機能（色: #D4C5F9）
 - [ ] `error-handling` - エラーハンドリング（色: #E99695）
@@ -79,163 +79,163 @@ GitHubリポジトリの「Issues」タブ → 「Labels」から作成
 
 #### フェーズ1: 基本機能（MVP）
 
-- [ ] **Issue #1: プロジェクト構造とソリューションのセットアップ**
+- [ ] **Issue #8: プロジェクト構造とソリューションのセットアップ**
   - ラベル: `setup`, `priority-high`
   - マイルストーン: M1: MVP完成
   - 依存関係: なし
 
-- [ ] **Issue #2: Core層の基本データモデル実装**
+- [ ] **Issue #9: Core層の基本データモデル実装**
   - ラベル: `core`, `priority-high`
   - マイルストーン: M1: MVP完成
-  - 依存関係: Depends on #1
+  - 依存関係: Depends on #8
 
-- [ ] **Issue #3: 札の定義と管理**
+- [ ] **Issue #10: 札の定義と管理**
   - ラベル: `core`, `priority-high`
   - マイルストーン: M1: MVP完成
-  - 依存関係: Depends on #2
+  - 依存関係: Depends on #9
 
-- [ ] **Issue #4: ゲーム状態管理クラスの実装**
+- [ ] **Issue #11: ゲーム状態管理クラスの実装**
   - ラベル: `domain`, `priority-high`
   - マイルストーン: M1: MVP完成
-  - 依存関係: Depends on #2
+  - 依存関係: Depends on #9
 
-- [ ] **Issue #5: 山札管理とシャッフル機能**
+- [ ] **Issue #12: 山札管理とシャッフル機能**
   - ラベル: `domain`, `priority-high`
   - マイルストーン: M1: MVP完成
-  - 依存関係: Depends on #3
+  - 依存関係: Depends on #10
 
-- [ ] **Issue #6: 基本的な役判定の実装（光札、種、短冊、カス）**
+- [ ] **Issue #13: 基本的な役判定の実装（光札、種、短冊、カス）**
   - ラベル: `domain`, `yaku`, `priority-high`
   - マイルストーン: M1: MVP完成
-  - 依存関係: Depends on #3
+  - 依存関係: Depends on #10
 
-- [ ] **Issue #7: 得点計算機能の実装**
+- [ ] **Issue #14: 得点計算機能の実装**
   - ラベル: `domain`, `priority-high`
   - マイルストーン: M1: MVP完成
-  - 依存関係: Depends on #6
+  - 依存関係: Depends on #13
 
-- [ ] **Issue #8: ターン進行の基本ロジック**
+- [ ] **Issue #15: ターン進行の基本ロジック**
   - ラベル: `domain`, `priority-high`
   - マイルストーン: M1: MVP完成
-  - 依存関係: Depends on #4, #5
+  - 依存関係: Depends on #11, #12
 
-- [ ] **Issue #9: アクション定義とバリデーション**
+- [ ] **Issue #16: アクション定義とバリデーション**
   - ラベル: `domain`, `priority-high`
-  - マイルストーン: M1: MVP完成
-  - 依存関係: Depends on #4
-
-- [ ] **Issue #10: ゲームファサードの実装**
-  - ラベル: `facade`, `priority-high`
-  - マイルストーン: M1: MVP完成
-  - 依存関係: Depends on #4, #8, #9
-
-- [ ] **Issue #11: 配札検証と勝敗判定**
-  - ラベル: `domain`, `priority-high`
-  - マイルストーン: M1: MVP完成
-  - 依存関係: Depends on #5, #10
-
-- [ ] **Issue #12: MVP統合テストとデバッグ**
-  - ラベル: `testing`, `priority-high`
   - マイルストーン: M1: MVP完成
   - 依存関係: Depends on #11
+
+- [ ] **Issue #17: ゲームファサードの実装**
+  - ラベル: `facade`, `priority-high`
+  - マイルストーン: M1: MVP完成
+  - 依存関係: Depends on #11, #15, #16
+
+- [ ] **Issue #18: 配札検証と勝敗判定**
+  - ラベル: `domain`, `priority-high`
+  - マイルストーン: M1: MVP完成
+  - 依存関係: Depends on #12, #17
+
+- [ ] **Issue #19: MVP統合テストとデバッグ**
+  - ラベル: `testing`, `priority-high`
+  - マイルストーン: M1: MVP完成
+  - 依存関係: Depends on #18
 
 #### フェーズ2: 完全なルール実装
 
-- [ ] **Issue #13: こいこいの宣言と処理**
+- [ ] **Issue #20: こいこいの宣言と処理**
   - ラベル: `domain`, `koikoi`, `priority-high`
   - マイルストーン: M2: 完全ルール実装
-  - 依存関係: Depends on #12
+  - 依存関係: Depends on #19
 
-- [ ] **Issue #14: 喰い付き（くいつき）の実装**
+- [ ] **Issue #21: 喰い付き（くいつき）の実装**
   - ラベル: `domain`, `special-rule`, `priority-high`
   - マイルストーン: M2: 完全ルール実装
-  - 依存関係: Depends on #12
+  - 依存関係: Depends on #19
 
-- [ ] **Issue #15: 特殊な役の実装（猪鹿蝶、花見で一杯、月見で一杯）**
+- [ ] **Issue #22: 特殊な役の実装（猪鹿蝶、花見で一杯、月見で一杯）**
   - ラベル: `domain`, `yaku`, `priority-medium`
   - マイルストーン: M2: 完全ルール実装
-  - 依存関係: Depends on #6
+  - 依存関係: Depends on #13
 
-- [ ] **Issue #16: 短冊の特殊役（赤短、青短）の実装**
+- [ ] **Issue #23: 短冊の特殊役（赤短、青短）の実装**
   - ラベル: `domain`, `yaku`, `priority-medium`
   - マイルストーン: M2: 完全ルール実装
-  - 依存関係: Depends on #6
+  - 依存関係: Depends on #13
 
-- [ ] **Issue #17: 総流れ（そうながれ）の実装**
+- [ ] **Issue #24: 総流れ（そうながれ）の実装**
   - ラベル: `domain`, `special-rule`, `priority-medium`
   - マイルストーン: M2: 完全ルール実装
-  - 依存関係: Depends on #11
+  - 依存関係: Depends on #18
 
-- [ ] **Issue #18: 配札の再検証機能**
+- [ ] **Issue #25: 配札の再検証機能**
   - ラベル: `domain`, `priority-medium`
   - マイルストーン: M2: 完全ルール実装
-  - 依存関係: Depends on #11
+  - 依存関係: Depends on #18
 
-- [ ] **Issue #19: フェーズ2統合テストとデバッグ**
+- [ ] **Issue #26: フェーズ2統合テストとデバッグ**
   - ラベル: `testing`, `priority-high`
   - マイルストーン: M2: 完全ルール実装
-  - 依存関係: Depends on #13, #14, #15, #16, #17, #18
+  - 依存関係: Depends on #20, #21, #22, #23, #24, #25
 
 #### フェーズ3: 拡張機能
 
-- [ ] **Issue #20: 手四（てし）の実装（オプション）**
+- [ ] **Issue #27: 手四（てし）の実装（オプション）**
   - ラベル: `domain`, `special-rule`, `optional`, `priority-low`
   - マイルストーン: M3: 拡張機能実装
-  - 依存関係: Depends on #19
+  - 依存関係: Depends on #26
 
-- [ ] **Issue #21: ルール設定のカスタマイズ機能**
+- [ ] **Issue #28: ルール設定のカスタマイズ機能**
   - ラベル: `domain`, `configuration`, `priority-medium`
   - マイルストーン: M3: 拡張機能実装
-  - 依存関係: Depends on #19
+  - 依存関係: Depends on #26
 
-- [ ] **Issue #22: イベントシステムの実装**
+- [ ] **Issue #29: イベントシステムの実装**
   - ラベル: `domain`, `events`, `priority-medium`
   - マイルストーン: M3: 拡張機能実装
-  - 依存関係: Depends on #10
+  - 依存関係: Depends on #17
 
-- [ ] **Issue #23: フェーズ3統合テストとデバッグ**
+- [ ] **Issue #30: フェーズ3統合テストとデバッグ**
   - ラベル: `testing`, `priority-medium`
   - マイルストーン: M3: 拡張機能実装
-  - 依存関係: Depends on #20, #21, #22
+  - 依存関係: Depends on #27, #28, #29
 
 #### フェーズ4: 高度な機能
 
-- [ ] **Issue #24: パフォーマンス最適化**
+- [ ] **Issue #31: パフォーマンス最適化**
   - ラベル: `performance`, `optimization`, `priority-low`
   - マイルストーン: M4: リリース準備完了
-  - 依存関係: Depends on #23
+  - 依存関係: Depends on #30
 
-- [ ] **Issue #25: 詳細なログ機能**
+- [ ] **Issue #32: 詳細なログ機能**
   - ラベル: `logging`, `priority-low`
   - マイルストーン: M4: リリース準備完了
-  - 依存関係: Depends on #22
+  - 依存関係: Depends on #29
 
-- [ ] **Issue #26: リプレイ機能**
+- [ ] **Issue #33: リプレイ機能**
   - ラベル: `replay`, `priority-low`
   - マイルストーン: M4: リリース準備完了
-  - 依存関係: Depends on #22
+  - 依存関係: Depends on #29
 
-- [ ] **Issue #27: フェーズ4統合テストと最終調整**
+- [ ] **Issue #34: フェーズ4統合テストと最終調整**
   - ラベル: `testing`, `priority-low`
   - マイルストーン: M4: リリース準備完了
-  - 依存関係: Depends on #24, #25, #26
+  - 依存関係: Depends on #31, #32, #33
 
 #### その他
 
-- [ ] **Issue #28: エラーハンドリングの実装**
+- [ ] **Issue #35: エラーハンドリングの実装**
   - ラベル: `error-handling`, `priority-medium`
   - マイルストーン: M2: 完全ルール実装
-  - 依存関係: Depends on #9
+  - 依存関係: Depends on #16
 
-- [ ] **Issue #29: APIリファレンスの作成**
+- [ ] **Issue #36: APIリファレンスの作成**
   - ラベル: `documentation`, `priority-medium`
   - マイルストーン: M4: リリース準備完了
-  - 依存関係: Depends on #19
+  - 依存関係: Depends on #26
 
-- [ ] **Issue #30: CI/CDの設定**
+- [ ] **Issue #37: CI/CDの設定**
   - ラベル: `ci-cd`, `infrastructure`, `priority-medium`
   - マイルストーン: M1: MVP完成
-  - 依存関係: Depends on #1
+  - 依存関係: Depends on #8
 
 ---
 
