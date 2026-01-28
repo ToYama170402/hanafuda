@@ -28,6 +28,7 @@ public class KoiKoiGame
     /// </summary>
     public GameState GetGameState()
     {
+        // 現在は直接返しているが、将来的には読み取り専用ビューまたはコピーを返すように変更
         return _gameState;
     }
 }

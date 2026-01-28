@@ -7,9 +7,9 @@ namespace HanafudaEngine.Domain;
 /// </summary>
 public class GameState
 {
-    public List<Card> Deck { get; init; } = new();
-    public List<Card> Field { get; init; } = new();
-    public Dictionary<PlayerId, List<Card>> Hands { get; init; } = new();
-    public Dictionary<PlayerId, List<Card>> CapturedCards { get; init; } = new();
-    public PlayerId CurrentPlayer { get; init; } = new PlayerId("Player1");
+    public IReadOnlyList<Card> Deck { get; init; } = new List<Card>();
+    public IReadOnlyList<Card> Field { get; init; } = new List<Card>();
+    public IReadOnlyDictionary<PlayerId, IReadOnlyList<Card>> Hands { get; init; } = new Dictionary<PlayerId, IReadOnlyList<Card>>();
+    public IReadOnlyDictionary<PlayerId, IReadOnlyList<Card>> CapturedCards { get; init; } = new Dictionary<PlayerId, IReadOnlyList<Card>>();
+    public PlayerId? CurrentPlayer { get; init; }
 }
