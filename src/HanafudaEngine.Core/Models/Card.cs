@@ -28,17 +28,17 @@ public sealed class Card : IEquatable<Card>
     /// <summary>
     /// Indicates if this card has special flags
     /// </summary>
-    public bool IsSpecial => SpecialFlag != SpecialCardFlag.None;
+    public bool IsSpecial => SpecialFlag.HasValue;
     
     /// <summary>
     /// Special flags for this card (e.g., RedPoetry, BluePoetry)
     /// </summary>
-    public SpecialCardFlag SpecialFlag { get; }
+    public SpecialCardFlag? SpecialFlag { get; }
     
     /// <summary>
     /// Creates a new Card instance
     /// </summary>
-    public Card(Guid id, Month month, CardType type, string name, SpecialCardFlag specialFlag = SpecialCardFlag.None)
+    public Card(Guid id, Month month, CardType type, string name, SpecialCardFlag? specialFlag = null)
     {
         if (id == Guid.Empty)
             throw new ArgumentException("Card Id cannot be Guid.Empty.", nameof(id));

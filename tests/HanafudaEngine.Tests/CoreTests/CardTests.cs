@@ -8,13 +8,13 @@ public class CardTests
     public void Card_Constructor_ShouldSetPropertiesCorrectly()
     {
         var id = Guid.NewGuid();
-        var card = new Card(id, Month.January, CardType.Hikari, "松に鶴", SpecialCardFlag.None);
+        var card = new Card(id, Month.January, CardType.Hikari, "松に鶴");
         
         Assert.Equal(id, card.Id);
         Assert.Equal(Month.January, card.Month);
         Assert.Equal(CardType.Hikari, card.Type);
         Assert.Equal("松に鶴", card.Name);
-        Assert.Equal(SpecialCardFlag.None, card.SpecialFlag);
+        Assert.Null(card.SpecialFlag);
         Assert.False(card.IsSpecial);
     }
     
