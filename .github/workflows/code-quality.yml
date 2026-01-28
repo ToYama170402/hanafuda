@@ -37,7 +37,7 @@ jobs:
       run: dotnet build HanafudaEngine.sln --configuration Release --no-restore /p:TreatWarningsAsErrors=false /p:EnforceCodeStyleInBuild=true
     
     - name: Run Security Scan (dotnet list package --vulnerable)
-      run: dotnet list package --vulnerable --include-transitive || true
+      run: dotnet list HanafudaEngine.sln package --vulnerable --include-transitive || true
     
     - name: Check for outdated packages
-      run: dotnet list package --outdated || true
+      run: dotnet list HanafudaEngine.sln package --outdated || true
