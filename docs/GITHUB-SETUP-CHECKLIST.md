@@ -48,7 +48,7 @@ GitHubリポジトリの「Issues」タブ → 「Labels」から作成
 
 - [ ] `setup` - プロジェクトセットアップ関連（色: #0052CC）
 - [ ] `core` - Core層の実装（色: #5319E7）
-- [ ] `domain` - Domain層の実装（色: #8D76DB）
+- [ ] `domain` - Domain層の実装（色: #1D76DB）
 - [ ] `facade` - Facade層の実装（色: #0E8A16）
 - [ ] `testing` - テスト関連（色: #D93F0B）
 
@@ -60,7 +60,7 @@ GitHubリポジトリの「Issues」タブ → 「Labels」から作成
 - [ ] `events` - イベントシステム（色: #C5DEF5）
 - [ ] `documentation` - ドキュメント（色: #0075CA）
 - [ ] `ci-cd` - CI/CD関連（色: #C2E0C6）
-- [ ] `performance` - パフォーマンス最適化（色: #13B75）
+- [ ] `performance` - パフォーマンス最適化（色: #006B75）
 - [ ] `logging` - ログ機能（色: #BFD4F2）
 - [ ] `replay` - リプレイ機能（色: #D4C5F9）
 - [ ] `error-handling` - エラーハンドリング（色: #E99695）
