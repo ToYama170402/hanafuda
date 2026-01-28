@@ -37,6 +37,22 @@ public class CardTests
     }
     
     [Fact]
+    public void Card_Constructor_WithEmptyName_ShouldThrowArgumentException()
+    {
+        var id = Guid.NewGuid();
+        Assert.Throws<ArgumentException>(() => 
+            new Card(id, Month.January, CardType.Hikari, ""));
+    }
+    
+    [Fact]
+    public void Card_Constructor_WithWhitespaceName_ShouldThrowArgumentException()
+    {
+        var id = Guid.NewGuid();
+        Assert.Throws<ArgumentException>(() => 
+            new Card(id, Month.January, CardType.Hikari, "   "));
+    }
+    
+    [Fact]
     public void Card_Equals_WithSameId_ShouldReturnTrue()
     {
         var id = Guid.NewGuid();

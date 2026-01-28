@@ -43,7 +43,13 @@ public sealed class Card : IEquatable<Card>
         Id = id;
         Month = month;
         Type = type;
-        Name = name ?? throw new ArgumentNullException(nameof(name));
+        
+        if (name == null)
+            throw new ArgumentNullException(nameof(name));
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Card name cannot be empty or whitespace.", nameof(name));
+        
+        Name = name;
         SpecialFlag = specialFlag;
     }
     

@@ -39,10 +39,23 @@ public sealed class Yaku
     /// <param name="cards">The cards that make up this yaku</param>
     public Yaku(YakuType type, int baseScore, int bonusScore, IEnumerable<Card> cards)
     {
+        if (cards == null)
+            throw new ArgumentNullException(nameof(cards));
+        
+        if (baseScore < 0)
+            throw new ArgumentOutOfRangeException(nameof(baseScore), "Base score cannot be negative.");
+        
+        if (bonusScore < 0)
+            throw new ArgumentOutOfRangeException(nameof(bonusScore), "Bonus score cannot be negative.");
+        
+        var cardList = cards.ToList();
+        if (cardList.Count == 0)
+            throw new ArgumentException("A yaku must consist of at least one card.", nameof(cards));
+        
         Type = type;
         BaseScore = baseScore;
         BonusScore = bonusScore;
-        Cards = (cards ?? throw new ArgumentNullException(nameof(cards))).ToList().AsReadOnly();
+        Cards = cardList.AsReadOnly();
     }
     
     /// <summary>

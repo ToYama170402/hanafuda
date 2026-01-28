@@ -52,6 +52,29 @@ public class YakuTests
     }
     
     [Fact]
+    public void Yaku_Constructor_WithEmptyCards_ShouldThrowArgumentException()
+    {
+        Assert.Throws<ArgumentException>(() => 
+            new Yaku(YakuType.Goko, 15, 0, Array.Empty<Card>()));
+    }
+    
+    [Fact]
+    public void Yaku_Constructor_WithNegativeBaseScore_ShouldThrowArgumentOutOfRangeException()
+    {
+        var card = new Card(Guid.NewGuid(), Month.January, CardType.Hikari, "松に鶴");
+        Assert.Throws<ArgumentOutOfRangeException>(() => 
+            new Yaku(YakuType.Goko, -1, 0, new[] { card }));
+    }
+    
+    [Fact]
+    public void Yaku_Constructor_WithNegativeBonusScore_ShouldThrowArgumentOutOfRangeException()
+    {
+        var card = new Card(Guid.NewGuid(), Month.January, CardType.Hikari, "松に鶴");
+        Assert.Throws<ArgumentOutOfRangeException>(() => 
+            new Yaku(YakuType.Goko, 15, -1, new[] { card }));
+    }
+    
+    [Fact]
     public void Yaku_Cards_ShouldBeReadOnly()
     {
         var card = new Card(Guid.NewGuid(), Month.January, CardType.Hikari, "松に鶴");
