@@ -107,13 +107,16 @@ dotnet format HanafudaEngine.sln --verify-no-changes
   - 古くなったパッケージの確認
 
 #### 4. リリース
-- **トリガー**: `v*` タグのプッシュ、手動実行
+- **トリガー**:
+  - `v*` タグのプッシュ（完全なリリース処理）
+  - 手動実行（`workflow_dispatch`、ビルド／テスト／パッケージングとアーティファクトアップロードのみ）
 - **処理内容**:
-  - バージョン番号の自動取得
+  - バージョン番号の自動取得（タグ付き実行時）または手動入力
   - Release 構成でのビルドとテスト
-  - NuGet パッケージの作成
-  - NuGet.org および GitHub Packages への公開
-  - GitHub Release の自動作成
+  - NuGet パッケージとシンボルパッケージの作成
+  - NuGet.org および GitHub Packages への公開（タグ付き実行時のみ）
+  - GitHub Release の自動作成（タグ付き実行時のみ）
+  - アーティファクトのアップロード（全実行時）
 
 #### 5. Dependabot
 - **トリガー**: 週次スケジュール (月曜日)

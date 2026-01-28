@@ -32,7 +32,6 @@ jobs:
     
     - name: Run dotnet format check
       run: dotnet format HanafudaEngine.sln --verify-no-changes --verbosity diagnostic
-      continue-on-error: true
     
     - name: Build with analyzers
       run: dotnet build HanafudaEngine.sln --configuration Release --no-restore /p:TreatWarningsAsErrors=false /p:EnforceCodeStyleInBuild=true
