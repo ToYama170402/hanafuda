@@ -57,16 +57,24 @@ jobs:
         dotnet pack src/HanafudaEngine.Facade/HanafudaEngine.Facade.csproj --configuration Release --no-build --output ./artifacts /p:PackageVersion=${{ steps.version.outputs.VERSION }}
     
     - name: Publish to NuGet.org
-      if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') && secrets.NUGET_API_KEY != ''
+      if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
       run: |
-        dotnet nuget push ./artifacts/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
-        dotnet nuget push ./artifacts/*.snupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate || true
+        if [ -n "${{ secrets.NUGET_API_KEY }}" ]; then
+          dotnet nuget push ./artifacts/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+          if ls ./artifacts/*.snupkg 1> /dev/null 2>&1; then
+            dotnet nuget push ./artifacts/*.snupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+          fi
+        else
+          echo "NUGET_API_KEY not configured, skipping NuGet.org publish"
+        fi
     
     - name: Publish to GitHub Packages
       if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
       run: |
         dotnet nuget push ./artifacts/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json --skip-duplicate
-        dotnet nuget push ./artifacts/*.snupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json --skip-duplicate || true
+        if ls ./artifacts/*.snupkg 1> /dev/null 2>&1; then
+          dotnet nuget push ./artifacts/*.snupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json --skip-duplicate
+        fi
     
     - name: Create GitHub Release
       if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
