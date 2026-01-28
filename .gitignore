@@ -27,6 +27,11 @@ x86/
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
 
+# Code Coverage
+coverage/
+*.coverage
+*.coveragexml
+
 # NUnit
 *.VisualState.xml
 TestResult.xml
