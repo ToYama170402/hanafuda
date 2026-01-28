@@ -1,4 +1,10 @@
 # hanafuda
+
+[![CI](https://github.com/ToYama170402/hanafuda/actions/workflows/ci.yml/badge.svg)](https://github.com/ToYama170402/hanafuda/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/ToYama170402/hanafuda/actions/workflows/codeql.yml/badge.svg)](https://github.com/ToYama170402/hanafuda/actions/workflows/codeql.yml)
+[![Code Quality](https://github.com/ToYama170402/hanafuda/actions/workflows/code-quality.yml/badge.svg)](https://github.com/ToYama170402/hanafuda/actions/workflows/code-quality.yml)
+[![codecov](https://codecov.io/gh/ToYama170402/hanafuda/branch/main/graph/badge.svg)](https://codecov.io/gh/ToYama170402/hanafuda)
+
 花札のゲームルールを完全AI駆動開発する。
 
 ## ドキュメント
