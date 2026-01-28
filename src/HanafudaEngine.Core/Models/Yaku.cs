@@ -51,6 +51,8 @@ public sealed class Yaku
         var cardList = cards.ToList();
         if (cardList.Count == 0)
             throw new ArgumentException("A yaku must consist of at least one card.", nameof(cards));
+        if (cardList.Any(card => card is null))
+            throw new ArgumentException("Cards collection cannot contain null elements.", nameof(cards));
         
         Type = type;
         BaseScore = baseScore;

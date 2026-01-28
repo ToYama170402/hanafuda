@@ -40,6 +40,9 @@ public sealed class Card : IEquatable<Card>
     /// </summary>
     public Card(Guid id, Month month, CardType type, string name, SpecialCardFlag specialFlag = SpecialCardFlag.None)
     {
+        if (id == Guid.Empty)
+            throw new ArgumentException("Card Id cannot be Guid.Empty.", nameof(id));
+        
         Id = id;
         Month = month;
         Type = type;

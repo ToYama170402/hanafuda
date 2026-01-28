@@ -59,6 +59,14 @@ public class YakuTests
     }
     
     [Fact]
+    public void Yaku_Constructor_WithNullElementInCards_ShouldThrowArgumentException()
+    {
+        var cards = new Card?[] { new Card(Guid.NewGuid(), Month.January, CardType.Hikari, "松に鶴"), null };
+        Assert.Throws<ArgumentException>(() => 
+            new Yaku(YakuType.Goko, 15, 0, cards!));
+    }
+    
+    [Fact]
     public void Yaku_Constructor_WithNegativeBaseScore_ShouldThrowArgumentOutOfRangeException()
     {
         var card = new Card(Guid.NewGuid(), Month.January, CardType.Hikari, "松に鶴");

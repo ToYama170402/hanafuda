@@ -37,6 +37,13 @@ public class CardTests
     }
     
     [Fact]
+    public void Card_Constructor_WithEmptyGuid_ShouldThrowArgumentException()
+    {
+        Assert.Throws<ArgumentException>(() => 
+            new Card(Guid.Empty, Month.January, CardType.Hikari, "松に鶴"));
+    }
+    
+    [Fact]
     public void Card_Constructor_WithEmptyName_ShouldThrowArgumentException()
     {
         var id = Guid.NewGuid();
