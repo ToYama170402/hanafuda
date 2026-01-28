@@ -93,11 +93,9 @@ public class YakuTests
         // Verify it's IReadOnlyList
         Assert.IsAssignableFrom<IReadOnlyList<Card>>(yaku.Cards);
         
-        // Verify it's actually read-only by attempting to cast to ICollection and checking IsReadOnly
-        if (yaku.Cards is ICollection<Card> collection)
-        {
-            Assert.True(collection.IsReadOnly);
-        }
+        // Verify it's actually read-only by casting to ICollection and checking IsReadOnly
+        var collection = Assert.IsAssignableFrom<ICollection<Card>>(yaku.Cards);
+        Assert.True(collection.IsReadOnly);
     }
     
     [Fact]
