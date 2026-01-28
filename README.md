@@ -10,6 +10,7 @@
 ### 実装計画
 - [🚀 クイックスタートガイド](docs/QUICKSTART.md) - すぐに実装を始めたい方向け（最初に読む）
 - [✅ GitHubセットアップチェックリスト](docs/GITHUB-SETUP-CHECKLIST.md) - Issue作成前の準備作業
+- [📍 マイルストーン作成ガイド](docs/MILESTONE-CREATION-GUIDE.md) - マイルストーンの作成方法
 - [実装ロードマップ](docs/implementation-roadmap.md) - ビジュアルで分かりやすい実装の流れ
 - [実装計画書](docs/implementation-plan.md) - 仕様書に基づいた段階的な実装計画（30個のIssueに分解）
 - [Issue作成ガイド](docs/issues-summary.md) - GitHub Issueを作成するためのガイド

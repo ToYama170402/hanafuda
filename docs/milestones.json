@@ -1,0 +1,26 @@
+[
+  {
+    "title": "M1: MVP完成",
+    "description": "基本的なゲームフローが動作する最小限の機能",
+    "due_weeks": 3,
+    "state": "open"
+  },
+  {
+    "title": "M2: 完全ルール実装",
+    "description": "こいこいを含む完全なゲームルールの実装",
+    "due_weeks": 5,
+    "state": "open"
+  },
+  {
+    "title": "M3: 拡張機能実装",
+    "description": "カスタマイズ機能やイベントシステムの実装",
+    "due_weeks": 6,
+    "state": "open"
+  },
+  {
+    "title": "M4: リリース準備完了",
+    "description": "最適化、ドキュメント、リプレイ機能の実装",
+    "due_weeks": 8,
+    "state": "open"
+  }
+]
