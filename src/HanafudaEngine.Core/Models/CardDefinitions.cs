@@ -37,17 +37,23 @@ public static class CardDefinitions
     /// <param name="type">The type of the card</param>
     /// <param name="index">The index within cards of the same month and type (default: 0)</param>
     /// <returns>The card matching the criteria</returns>
-    /// <exception cref="InvalidOperationException">Thrown when no matching card is found</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when index is negative or beyond available cards</exception>
     public static Card GetCard(Month month, CardType type, int index = 0)
     {
-        var matchingCards = AllCards
-            .Where(c => c.Month == month && c.Type == type)
-            .ToList();
+        // Use cached dictionary for better performance
+        var monthCards = _cardsByMonth.Value[month];
+        var matchingCards = monthCards.Where(c => c.Type == type).ToList();
         
-        if (index < 0 || index >= matchingCards.Count)
+        if (index < 0)
         {
-            throw new InvalidOperationException(
-                $"No card found at index {index} for Month={month}, CardType={type}. Found {matchingCards.Count} matching card(s).");
+            throw new ArgumentOutOfRangeException(nameof(index), index, 
+                $"Index cannot be negative.");
+        }
+        
+        if (index >= matchingCards.Count)
+        {
+            throw new ArgumentOutOfRangeException(nameof(index), index,
+                $"Index {index} is out of range for Month={month}, CardType={type}. Found {matchingCards.Count} matching card(s).");
         }
         
         return matchingCards[index];

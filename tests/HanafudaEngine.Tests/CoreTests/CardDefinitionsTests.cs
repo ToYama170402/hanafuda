@@ -255,10 +255,11 @@ public class CardDefinitionsTests
     public void GetCard_WithInvalidIndex_ShouldThrowException()
     {
         // January has only 1 Hikari card, so index 1 should throw
-        var exception = Assert.Throws<InvalidOperationException>(() => 
+        var exception = Assert.Throws<ArgumentOutOfRangeException>(() => 
             CardDefinitions.GetCard(Month.January, CardType.Hikari, 1));
         
-        Assert.Contains("index 1", exception.Message);
+        Assert.Equal("index", exception.ParamName);
+        Assert.Contains("Index 1 is out of range", exception.Message);
         Assert.Contains("Month=January", exception.Message);
         Assert.Contains("CardType=Hikari", exception.Message);
     }
@@ -266,20 +267,22 @@ public class CardDefinitionsTests
     [Fact]
     public void GetCard_WithNegativeIndex_ShouldThrowException()
     {
-        var exception = Assert.Throws<InvalidOperationException>(() => 
+        var exception = Assert.Throws<ArgumentOutOfRangeException>(() => 
             CardDefinitions.GetCard(Month.January, CardType.Hikari, -1));
         
-        Assert.Contains("index -1", exception.Message);
+        Assert.Equal("index", exception.ParamName);
+        Assert.Contains("Index cannot be negative", exception.Message);
     }
 
     [Fact]
     public void GetCard_ForNonExistentCombination_ShouldThrowException()
     {
         // December has no Tane cards, so this should throw
-        var exception = Assert.Throws<InvalidOperationException>(() => 
+        var exception = Assert.Throws<ArgumentOutOfRangeException>(() => 
             CardDefinitions.GetCard(Month.December, CardType.Tane, 0));
         
-        Assert.Contains("index 0", exception.Message);
+        Assert.Equal("index", exception.ParamName);
+        Assert.Contains("Index 0 is out of range", exception.Message);
         Assert.Contains("Found 0 matching card(s)", exception.Message);
     }
 }
