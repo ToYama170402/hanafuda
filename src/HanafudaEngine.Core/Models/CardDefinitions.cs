@@ -43,20 +43,20 @@ public static class CardDefinitions
         // Validate index first for early exit
         if (index < 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(index), index, 
+            throw new ArgumentOutOfRangeException(nameof(index), index,
                 $"Index cannot be negative.");
         }
-        
+
         // Use cached dictionary and filter for matching type
         var monthCards = _cardsByMonth.Value[month];
         var matchingCards = monthCards.Where(c => c.Type == type).ToList();
-        
+
         if (index >= matchingCards.Count)
         {
             throw new ArgumentOutOfRangeException(nameof(index), index,
                 $"Index {index} is out of range for Month={month}, CardType={type}. Found {matchingCards.Count} matching card(s).");
         }
-        
+
         return matchingCards[index];
     }
 
