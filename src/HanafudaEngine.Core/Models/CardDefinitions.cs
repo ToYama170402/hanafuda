@@ -30,6 +30,29 @@ public static class CardDefinitions
         return _cardsByType.Value[type];
     }
 
+    /// <summary>
+    /// Gets a specific card by month, type, and index
+    /// </summary>
+    /// <param name="month">The month of the card</param>
+    /// <param name="type">The type of the card</param>
+    /// <param name="index">The index within cards of the same month and type (default: 0)</param>
+    /// <returns>The card matching the criteria</returns>
+    /// <exception cref="InvalidOperationException">Thrown when no matching card is found</exception>
+    public static Card GetCard(Month month, CardType type, int index = 0)
+    {
+        var matchingCards = AllCards
+            .Where(c => c.Month == month && c.Type == type)
+            .ToList();
+        
+        if (index < 0 || index >= matchingCards.Count)
+        {
+            throw new InvalidOperationException(
+                $"No card found at index {index} for Month={month}, CardType={type}. Found {matchingCards.Count} matching card(s).");
+        }
+        
+        return matchingCards[index];
+    }
+
     private static IReadOnlyDictionary<Month, IReadOnlyList<Card>> InitializeCardsByMonth()
     {
         return AllCards

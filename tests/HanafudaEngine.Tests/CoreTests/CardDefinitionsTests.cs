@@ -222,4 +222,64 @@ public class CardDefinitionsTests
         Assert.Contains(decemberCards, c => c.Type == CardType.Hikari && c.Name == "桐に鳳凰");
         Assert.Equal(3, decemberCards.Count(c => c.Type == CardType.Kasu && c.Name == "桐のカス"));
     }
+
+    [Fact]
+    public void GetCard_ShouldReturnCorrectCard()
+    {
+        // Get Hikari card from January (松に鶴)
+        var card = CardDefinitions.GetCard(Month.January, CardType.Hikari);
+        
+        Assert.NotNull(card);
+        Assert.Equal(Month.January, card.Month);
+        Assert.Equal(CardType.Hikari, card.Type);
+        Assert.Equal("松に鶴", card.Name);
+    }
+
+    [Fact]
+    public void GetCard_WithIndex_ShouldReturnCorrectCard()
+    {
+        // January has 2 Kasu cards - get the first one (index 0)
+        var card1 = CardDefinitions.GetCard(Month.January, CardType.Kasu, 0);
+        var card2 = CardDefinitions.GetCard(Month.January, CardType.Kasu, 1);
+        
+        Assert.NotNull(card1);
+        Assert.NotNull(card2);
+        Assert.Equal(Month.January, card1.Month);
+        Assert.Equal(Month.January, card2.Month);
+        Assert.Equal(CardType.Kasu, card1.Type);
+        Assert.Equal(CardType.Kasu, card2.Type);
+        Assert.NotEqual(card1.Id, card2.Id);
+    }
+
+    [Fact]
+    public void GetCard_WithInvalidIndex_ShouldThrowException()
+    {
+        // January has only 1 Hikari card, so index 1 should throw
+        var exception = Assert.Throws<InvalidOperationException>(() => 
+            CardDefinitions.GetCard(Month.January, CardType.Hikari, 1));
+        
+        Assert.Contains("index 1", exception.Message);
+        Assert.Contains("Month=January", exception.Message);
+        Assert.Contains("CardType=Hikari", exception.Message);
+    }
+
+    [Fact]
+    public void GetCard_WithNegativeIndex_ShouldThrowException()
+    {
+        var exception = Assert.Throws<InvalidOperationException>(() => 
+            CardDefinitions.GetCard(Month.January, CardType.Hikari, -1));
+        
+        Assert.Contains("index -1", exception.Message);
+    }
+
+    [Fact]
+    public void GetCard_ForNonExistentCombination_ShouldThrowException()
+    {
+        // December has no Tane cards, so this should throw
+        var exception = Assert.Throws<InvalidOperationException>(() => 
+            CardDefinitions.GetCard(Month.December, CardType.Tane, 0));
+        
+        Assert.Contains("index 0", exception.Message);
+        Assert.Contains("Found 0 matching card(s)", exception.Message);
+    }
 }
