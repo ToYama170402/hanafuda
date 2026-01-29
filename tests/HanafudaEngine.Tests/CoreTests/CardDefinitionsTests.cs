@@ -193,7 +193,7 @@ public class CardDefinitionsTests
     }
 
     [Fact]
-    public void AllCards_ShouldBeImmutable()
+    public void AllCards_ShouldReturnSameInstance()
     {
         var allCards1 = CardDefinitions.AllCards;
         var allCards2 = CardDefinitions.AllCards;

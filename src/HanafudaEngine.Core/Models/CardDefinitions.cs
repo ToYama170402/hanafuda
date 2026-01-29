@@ -6,6 +6,8 @@ namespace HanafudaEngine.Core.Models;
 public static class CardDefinitions
 {
     private static readonly Lazy<IReadOnlyList<Card>> _allCards = new Lazy<IReadOnlyList<Card>>(InitializeCards);
+    private static readonly Lazy<IReadOnlyDictionary<Month, IReadOnlyList<Card>>> _cardsByMonth = new Lazy<IReadOnlyDictionary<Month, IReadOnlyList<Card>>>(InitializeCardsByMonth);
+    private static readonly Lazy<IReadOnlyDictionary<CardType, IReadOnlyList<Card>>> _cardsByType = new Lazy<IReadOnlyDictionary<CardType, IReadOnlyList<Card>>>(InitializeCardsByType);
 
     /// <summary>
     /// Gets all 48 Hanafuda cards
@@ -17,7 +19,7 @@ public static class CardDefinitions
     /// </summary>
     public static IReadOnlyList<Card> GetCardsByMonth(Month month)
     {
-        return AllCards.Where(c => c.Month == month).ToList().AsReadOnly();
+        return _cardsByMonth.Value[month];
     }
 
     /// <summary>
@@ -25,7 +27,23 @@ public static class CardDefinitions
     /// </summary>
     public static IReadOnlyList<Card> GetCardsByType(CardType type)
     {
-        return AllCards.Where(c => c.Type == type).ToList().AsReadOnly();
+        return _cardsByType.Value[type];
+    }
+
+    private static IReadOnlyDictionary<Month, IReadOnlyList<Card>> InitializeCardsByMonth()
+    {
+        return AllCards
+            .GroupBy(c => c.Month)
+            .ToDictionary(g => g.Key, g => (IReadOnlyList<Card>)g.ToList().AsReadOnly())
+            .AsReadOnly();
+    }
+
+    private static IReadOnlyDictionary<CardType, IReadOnlyList<Card>> InitializeCardsByType()
+    {
+        return AllCards
+            .GroupBy(c => c.Type)
+            .ToDictionary(g => g.Key, g => (IReadOnlyList<Card>)g.ToList().AsReadOnly())
+            .AsReadOnly();
     }
 
     private static IReadOnlyList<Card> InitializeCards()
