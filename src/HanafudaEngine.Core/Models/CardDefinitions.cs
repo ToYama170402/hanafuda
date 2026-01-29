@@ -40,15 +40,16 @@ public static class CardDefinitions
     /// <exception cref="ArgumentOutOfRangeException">Thrown when index is negative or beyond available cards</exception>
     public static Card GetCard(Month month, CardType type, int index = 0)
     {
-        // Use cached dictionary for better performance
-        var monthCards = _cardsByMonth.Value[month];
-        var matchingCards = monthCards.Where(c => c.Type == type).ToList();
-        
+        // Validate index first for early exit
         if (index < 0)
         {
             throw new ArgumentOutOfRangeException(nameof(index), index, 
                 $"Index cannot be negative.");
         }
+        
+        // Use cached dictionary and filter for matching type
+        var monthCards = _cardsByMonth.Value[month];
+        var matchingCards = monthCards.Where(c => c.Type == type).ToList();
         
         if (index >= matchingCards.Count)
         {
