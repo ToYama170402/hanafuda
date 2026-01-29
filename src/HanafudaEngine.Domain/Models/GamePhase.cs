@@ -26,6 +26,6 @@ public enum GamePhase
     /// <summary>Game has ended with a winner</summary>
     GameOver,
 
-    /// <summary>Game ended in a draw (Sounagarе)</summary>
+    /// <summary>Game ended in a draw (Sounagare)</summary>
     Draw
 }

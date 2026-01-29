@@ -47,6 +47,7 @@ public sealed class PlayerState
     /// <param name="hasCalledKoiKoi">Whether the player has called Koi-Koi</param>
     /// <param name="completedYaku">Yaku the player has completed</param>
     /// <param name="currentScore">The player's current score</param>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when currentScore is negative</exception>
     public PlayerState(
         PlayerId id,
         IEnumerable<Card>? hand = null,
@@ -55,6 +56,9 @@ public sealed class PlayerState
         IEnumerable<Yaku>? completedYaku = null,
         int currentScore = 0)
     {
+        if (currentScore < 0)
+            throw new ArgumentOutOfRangeException(nameof(currentScore), "Current score cannot be negative.");
+
         Id = id;
         Hand = hand?.ToList().AsReadOnly() ?? Array.Empty<Card>().ToList().AsReadOnly();
         CapturedCards = capturedCards?.ToList().AsReadOnly() ?? Array.Empty<Card>().ToList().AsReadOnly();
@@ -66,8 +70,12 @@ public sealed class PlayerState
     /// <summary>
     /// Returns a new PlayerState with the specified hand
     /// </summary>
+    /// <exception cref="ArgumentNullException">Thrown when newHand is null</exception>
     public PlayerState WithHand(IEnumerable<Card> newHand)
     {
+        if (newHand == null)
+            throw new ArgumentNullException(nameof(newHand));
+
         return new PlayerState(
             Id,
             newHand,
@@ -80,8 +88,12 @@ public sealed class PlayerState
     /// <summary>
     /// Returns a new PlayerState with the specified captured cards
     /// </summary>
+    /// <exception cref="ArgumentNullException">Thrown when newCaptured is null</exception>
     public PlayerState WithCapturedCards(IEnumerable<Card> newCaptured)
     {
+        if (newCaptured == null)
+            throw new ArgumentNullException(nameof(newCaptured));
+
         return new PlayerState(
             Id,
             Hand,
@@ -108,8 +120,12 @@ public sealed class PlayerState
     /// <summary>
     /// Returns a new PlayerState with the specified completed Yaku
     /// </summary>
+    /// <exception cref="ArgumentNullException">Thrown when yaku is null</exception>
     public PlayerState WithCompletedYaku(IEnumerable<Yaku> yaku)
     {
+        if (yaku == null)
+            throw new ArgumentNullException(nameof(yaku));
+
         return new PlayerState(
             Id,
             Hand,
@@ -122,8 +138,12 @@ public sealed class PlayerState
     /// <summary>
     /// Returns a new PlayerState with the specified current score
     /// </summary>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when score is negative</exception>
     public PlayerState WithCurrentScore(int score)
     {
+        if (score < 0)
+            throw new ArgumentOutOfRangeException(nameof(score), "Current score cannot be negative.");
+
         return new PlayerState(
             Id,
             Hand,

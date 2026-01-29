@@ -48,6 +48,19 @@ public class GameStateTests
     }
 
     [Fact]
+    public void GameState_Constructor_WithNegativeTurnCount_ShouldThrowArgumentOutOfRangeException()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            new GameState(
+                Guid.NewGuid(),
+                GamePhase.NotStarted,
+                TurnPhase.PlayFromHand,
+                PlayerId.Player1,
+                PlayerId.Player1,
+                -1));
+    }
+
+    [Fact]
     public void GameState_Constructor_WithAllParameters_ShouldSetPropertiesCorrectly()
     {
         var gameId = Guid.NewGuid();
@@ -200,6 +213,22 @@ public class GameStateTests
         Assert.NotSame(originalState, newState);
         Assert.Equal(0, originalState.TurnCount);
         Assert.Equal(3, newState.TurnCount);
+    }
+
+    [Fact]
+    public void GameState_WithTurnCount_WithNegativeCount_ShouldThrowArgumentOutOfRangeException()
+    {
+        var gameId = Guid.NewGuid();
+        var state = new GameState(
+            gameId,
+            GamePhase.PlayerTurn,
+            TurnPhase.PlayFromHand,
+            PlayerId.Player1,
+            PlayerId.Player1,
+            0);
+
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            state.WithTurnCount(-5));
     }
 
     [Fact]
@@ -443,5 +472,101 @@ public class GameStateTests
         Assert.Equal(3, state.TurnCount);
         Assert.Equal(card1, state.LastPlayedCard);
         Assert.Equal(card2, state.LastDrawnCard);
+    }
+
+    [Fact]
+    public void GameState_WithDeck_WithNull_ShouldThrowArgumentNullException()
+    {
+        var gameId = Guid.NewGuid();
+        var state = new GameState(
+            gameId,
+            GamePhase.PlayerTurn,
+            TurnPhase.PlayFromHand,
+            PlayerId.Player1,
+            PlayerId.Player1,
+            0);
+
+        Assert.Throws<ArgumentNullException>(() =>
+            state.WithDeck(null!));
+    }
+
+    [Fact]
+    public void GameState_WithField_WithNull_ShouldThrowArgumentNullException()
+    {
+        var gameId = Guid.NewGuid();
+        var state = new GameState(
+            gameId,
+            GamePhase.PlayerTurn,
+            TurnPhase.PlayFromHand,
+            PlayerId.Player1,
+            PlayerId.Player1,
+            0);
+
+        Assert.Throws<ArgumentNullException>(() =>
+            state.WithField(null!));
+    }
+
+    [Fact]
+    public void GameState_WithPlayerState_WithNull_ShouldThrowArgumentNullException()
+    {
+        var gameId = Guid.NewGuid();
+        var state = new GameState(
+            gameId,
+            GamePhase.PlayerTurn,
+            TurnPhase.PlayFromHand,
+            PlayerId.Player1,
+            PlayerId.Player1,
+            0);
+
+        Assert.Throws<ArgumentNullException>(() =>
+            state.WithPlayerState(PlayerId.Player1, null!));
+    }
+
+    [Fact]
+    public void GameState_WithPendingCapture_WithNull_ShouldThrowArgumentNullException()
+    {
+        var gameId = Guid.NewGuid();
+        var state = new GameState(
+            gameId,
+            GamePhase.PlayerTurn,
+            TurnPhase.PlayFromHand,
+            PlayerId.Player1,
+            PlayerId.Player1,
+            0);
+
+        Assert.Throws<ArgumentNullException>(() =>
+            state.WithPendingCapture(null!));
+    }
+
+    [Fact]
+    public void GameState_WithWinner_WithNullResult_ShouldThrowArgumentNullException()
+    {
+        var gameId = Guid.NewGuid();
+        var state = new GameState(
+            gameId,
+            GamePhase.PlayerTurn,
+            TurnPhase.PlayFromHand,
+            PlayerId.Player1,
+            PlayerId.Player1,
+            0);
+
+        Assert.Throws<ArgumentNullException>(() =>
+            state.WithWinner(PlayerId.Player1, null!));
+    }
+
+    [Fact]
+    public void GameState_WithResult_WithNull_ShouldThrowArgumentNullException()
+    {
+        var gameId = Guid.NewGuid();
+        var state = new GameState(
+            gameId,
+            GamePhase.PlayerTurn,
+            TurnPhase.PlayFromHand,
+            PlayerId.Player1,
+            PlayerId.Player1,
+            0);
+
+        Assert.Throws<ArgumentNullException>(() =>
+            state.WithResult(null!));
     }
 }

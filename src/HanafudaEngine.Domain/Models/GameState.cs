@@ -100,6 +100,9 @@ public sealed class GameState
         if (gameId == Guid.Empty)
             throw new ArgumentException("GameId cannot be Guid.Empty.", nameof(gameId));
 
+        if (turnCount < 0)
+            throw new ArgumentOutOfRangeException(nameof(turnCount), "Turn count cannot be negative.");
+
         GameId = gameId;
         Phase = phase;
         TurnPhase = turnPhase;
@@ -163,8 +166,12 @@ public sealed class GameState
     /// <summary>
     /// Returns a new GameState with the specified turn count
     /// </summary>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when turnCount is negative</exception>
     public GameState WithTurnCount(int turnCount)
     {
+        if (turnCount < 0)
+            throw new ArgumentOutOfRangeException(nameof(turnCount), "Turn count cannot be negative.");
+
         return new GameState(
             GameId, Phase, TurnPhase, CurrentPlayer, Dealer, turnCount,
             Deck, Field, Players, LastPlayedCard, LastDrawnCard, PendingCapture, Winner, Result);
@@ -173,8 +180,12 @@ public sealed class GameState
     /// <summary>
     /// Returns a new GameState with the specified deck
     /// </summary>
+    /// <exception cref="ArgumentNullException">Thrown when deck is null</exception>
     public GameState WithDeck(IEnumerable<Card> deck)
     {
+        if (deck == null)
+            throw new ArgumentNullException(nameof(deck));
+
         return new GameState(
             GameId, Phase, TurnPhase, CurrentPlayer, Dealer, TurnCount,
             deck, Field, Players, LastPlayedCard, LastDrawnCard, PendingCapture, Winner, Result);
@@ -183,8 +194,12 @@ public sealed class GameState
     /// <summary>
     /// Returns a new GameState with the specified field
     /// </summary>
+    /// <exception cref="ArgumentNullException">Thrown when field is null</exception>
     public GameState WithField(IEnumerable<Card> field)
     {
+        if (field == null)
+            throw new ArgumentNullException(nameof(field));
+
         return new GameState(
             GameId, Phase, TurnPhase, CurrentPlayer, Dealer, TurnCount,
             Deck, field, Players, LastPlayedCard, LastDrawnCard, PendingCapture, Winner, Result);
@@ -193,8 +208,12 @@ public sealed class GameState
     /// <summary>
     /// Returns a new GameState with the specified player state
     /// </summary>
+    /// <exception cref="ArgumentNullException">Thrown when playerState is null</exception>
     public GameState WithPlayerState(PlayerId playerId, PlayerState playerState)
     {
+        if (playerState == null)
+            throw new ArgumentNullException(nameof(playerState));
+
         var newPlayers = new Dictionary<PlayerId, PlayerState>(Players)
         {
             [playerId] = playerState
@@ -228,8 +247,12 @@ public sealed class GameState
     /// <summary>
     /// Returns a new GameState with the specified pending capture cards
     /// </summary>
+    /// <exception cref="ArgumentNullException">Thrown when cards is null</exception>
     public GameState WithPendingCapture(IEnumerable<Card> cards)
     {
+        if (cards == null)
+            throw new ArgumentNullException(nameof(cards));
+
         return new GameState(
             GameId, Phase, TurnPhase, CurrentPlayer, Dealer, TurnCount,
             Deck, Field, Players, LastPlayedCard, LastDrawnCard, cards, Winner, Result);
@@ -238,8 +261,12 @@ public sealed class GameState
     /// <summary>
     /// Returns a new GameState with the specified winner and result
     /// </summary>
+    /// <exception cref="ArgumentNullException">Thrown when result is null</exception>
     public GameState WithWinner(PlayerId winner, GameResult result)
     {
+        if (result == null)
+            throw new ArgumentNullException(nameof(result));
+
         return new GameState(
             GameId, Phase, TurnPhase, CurrentPlayer, Dealer, TurnCount,
             Deck, Field, Players, LastPlayedCard, LastDrawnCard, PendingCapture, winner, result);
@@ -248,8 +275,12 @@ public sealed class GameState
     /// <summary>
     /// Returns a new GameState with the specified result (for draw)
     /// </summary>
+    /// <exception cref="ArgumentNullException">Thrown when result is null</exception>
     public GameState WithResult(GameResult result)
     {
+        if (result == null)
+            throw new ArgumentNullException(nameof(result));
+
         return new GameState(
             GameId, Phase, TurnPhase, CurrentPlayer, Dealer, TurnCount,
             Deck, Field, Players, LastPlayedCard, LastDrawnCard, PendingCapture, result.Winner, result);

@@ -19,6 +19,13 @@ public class PlayerStateTests
     }
 
     [Fact]
+    public void PlayerState_Constructor_WithNegativeScore_ShouldThrowArgumentOutOfRangeException()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            new PlayerState(PlayerId.Player1, currentScore: -5));
+    }
+
+    [Fact]
     public void PlayerState_Constructor_WithAllParameters_ShouldSetPropertiesCorrectly()
     {
         var hand = new List<Card>
@@ -148,6 +155,42 @@ public class PlayerStateTests
         hand.Add(new Card(Guid.NewGuid(), Month.June, CardType.Tane, "牡丹に蝶"));
 
         Assert.Single(playerState.Hand);
+    }
+
+    [Fact]
+    public void PlayerState_WithCurrentScore_WithNegativeScore_ShouldThrowArgumentOutOfRangeException()
+    {
+        var state = new PlayerState(PlayerId.Player1);
+
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            state.WithCurrentScore(-10));
+    }
+
+    [Fact]
+    public void PlayerState_WithHand_WithNull_ShouldThrowArgumentNullException()
+    {
+        var state = new PlayerState(PlayerId.Player1);
+
+        Assert.Throws<ArgumentNullException>(() =>
+            state.WithHand(null!));
+    }
+
+    [Fact]
+    public void PlayerState_WithCapturedCards_WithNull_ShouldThrowArgumentNullException()
+    {
+        var state = new PlayerState(PlayerId.Player1);
+
+        Assert.Throws<ArgumentNullException>(() =>
+            state.WithCapturedCards(null!));
+    }
+
+    [Fact]
+    public void PlayerState_WithCompletedYaku_WithNull_ShouldThrowArgumentNullException()
+    {
+        var state = new PlayerState(PlayerId.Player1);
+
+        Assert.Throws<ArgumentNullException>(() =>
+            state.WithCompletedYaku(null!));
     }
 
     [Fact]

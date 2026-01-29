@@ -28,7 +28,7 @@ public sealed class GameResult
     public bool IsKoiKoiWin { get; }
 
     /// <summary>
-    /// Whether the game ended in a draw (Sounagarе - total flow)
+    /// Whether the game ended in a draw (Sounagare - total flow)
     /// </summary>
     public bool IsDraw { get; }
 
