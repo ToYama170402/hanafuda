@@ -60,10 +60,10 @@ public sealed class PlayerState
             throw new ArgumentOutOfRangeException(nameof(currentScore), "Current score cannot be negative.");
 
         Id = id;
-        Hand = hand?.ToList().AsReadOnly() ?? Array.Empty<Card>().ToList().AsReadOnly();
-        CapturedCards = capturedCards?.ToList().AsReadOnly() ?? Array.Empty<Card>().ToList().AsReadOnly();
+        Hand = hand?.ToList().AsReadOnly() ?? (IReadOnlyList<Card>)Array.Empty<Card>();
+        CapturedCards = capturedCards?.ToList().AsReadOnly() ?? (IReadOnlyList<Card>)Array.Empty<Card>();
         HasCalledKoiKoi = hasCalledKoiKoi;
-        CompletedYaku = completedYaku?.ToList().AsReadOnly() ?? Array.Empty<Yaku>().ToList().AsReadOnly();
+        CompletedYaku = completedYaku?.ToList().AsReadOnly() ?? (IReadOnlyList<Yaku>)Array.Empty<Yaku>();
         CurrentScore = currentScore;
     }
 

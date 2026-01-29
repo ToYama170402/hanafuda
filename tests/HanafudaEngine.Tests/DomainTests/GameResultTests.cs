@@ -95,6 +95,42 @@ public class GameResultTests
     }
 
     [Fact]
+    public void GameResult_Constructor_WithKoiKoiWinButNoWinner_ShouldThrowArgumentException()
+    {
+        var scores = new Dictionary<PlayerId, int>
+        {
+            { PlayerId.Player1, 0 },
+            { PlayerId.Player2, 0 }
+        };
+        var yaku = new Dictionary<PlayerId, IReadOnlyList<Yaku>>
+        {
+            { PlayerId.Player1, new List<Yaku>() },
+            { PlayerId.Player2, new List<Yaku>() }
+        };
+
+        Assert.Throws<ArgumentException>(() =>
+            new GameResult(null, scores, yaku, true));
+    }
+
+    [Fact]
+    public void GameResult_Constructor_WithNegativeScore_ShouldThrowArgumentException()
+    {
+        var scores = new Dictionary<PlayerId, int>
+        {
+            { PlayerId.Player1, -10 },
+            { PlayerId.Player2, 5 }
+        };
+        var yaku = new Dictionary<PlayerId, IReadOnlyList<Yaku>>
+        {
+            { PlayerId.Player1, new List<Yaku>() },
+            { PlayerId.Player2, new List<Yaku>() }
+        };
+
+        Assert.Throws<ArgumentException>(() =>
+            new GameResult(PlayerId.Player1, scores, yaku, false));
+    }
+
+    [Fact]
     public void GameResult_CreateDraw_ShouldCreateDrawResult()
     {
         var scores = new Dictionary<PlayerId, int>
@@ -152,11 +188,36 @@ public class GameResultTests
             { PlayerId.Player2, new List<Yaku>() }
         };
 
-        var result = GameResult.CreateWin(PlayerId.Player2, scores, yaku, true);
+        var result = GameResult.CreateWin(PlayerId.Player1, scores, yaku, true);
 
-        Assert.Equal(PlayerId.Player2, result.Winner);
+        Assert.Equal(PlayerId.Player1, result.Winner);
         Assert.True(result.IsKoiKoiWin);
         Assert.False(result.IsDraw);
+    }
+
+    [Fact]
+    public void GameResult_DefensiveCopy_ShouldNotAllowExternalMutation()
+    {
+        var scores = new Dictionary<PlayerId, int>
+        {
+            { PlayerId.Player1, 15 },
+            { PlayerId.Player2, 5 }
+        };
+        var yaku = new Dictionary<PlayerId, IReadOnlyList<Yaku>>
+        {
+            { PlayerId.Player1, new List<Yaku>() },
+            { PlayerId.Player2, new List<Yaku>() }
+        };
+
+        var result = GameResult.CreateWin(PlayerId.Player1, scores, yaku);
+
+        // Modify original dictionaries
+        scores[PlayerId.Player1] = 999;
+        yaku[PlayerId.Player1] = new List<Yaku> { new Yaku(YakuType.Goko, 15, 0, new[] { new Card(Guid.NewGuid(), Month.January, CardType.Hikari, "松に鶴") }) };
+
+        // GameResult should not be affected
+        Assert.Equal(15, result.Scores[PlayerId.Player1]);
+        Assert.Empty(result.CompletedYaku[PlayerId.Player1]);
     }
 
     [Fact]

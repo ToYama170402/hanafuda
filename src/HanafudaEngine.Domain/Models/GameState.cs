@@ -109,16 +109,37 @@ public sealed class GameState
         CurrentPlayer = currentPlayer;
         Dealer = dealer;
         TurnCount = turnCount;
-        Deck = deck?.ToList().AsReadOnly() ?? Array.Empty<Card>().ToList().AsReadOnly();
-        Field = field?.ToList().AsReadOnly() ?? Array.Empty<Card>().ToList().AsReadOnly();
-        Players = players ?? new Dictionary<PlayerId, PlayerState>
+        Deck = deck?.ToList().AsReadOnly() ?? (IReadOnlyList<Card>)Array.Empty<Card>();
+        Field = field?.ToList().AsReadOnly() ?? (IReadOnlyList<Card>)Array.Empty<Card>();
+
+        // Defensive copy of Players dictionary to ensure immutability
+        if (players == null)
         {
-            { PlayerId.Player1, new PlayerState(PlayerId.Player1) },
-            { PlayerId.Player2, new PlayerState(PlayerId.Player2) }
-        };
+            Players = new Dictionary<PlayerId, PlayerState>
+            {
+                { PlayerId.Player1, new PlayerState(PlayerId.Player1) },
+                { PlayerId.Player2, new PlayerState(PlayerId.Player2) }
+            };
+        }
+        else
+        {
+            Players = new Dictionary<PlayerId, PlayerState>(players);
+        }
+
         LastPlayedCard = lastPlayedCard;
         LastDrawnCard = lastDrawnCard;
-        PendingCapture = pendingCapture?.ToList().AsReadOnly() ?? Array.Empty<Card>().ToList().AsReadOnly();
+        PendingCapture = pendingCapture?.ToList().AsReadOnly() ?? (IReadOnlyList<Card>)Array.Empty<Card>();
+
+        // Validate Winner and Result consistency
+        if (winner.HasValue && result != null && result.Winner != winner)
+        {
+            throw new ArgumentException("Winner parameter must match result.Winner when both are provided.");
+        }
+        if (winner.HasValue && result == null)
+        {
+            throw new ArgumentException("Result must be provided when Winner is specified.");
+        }
+
         Winner = winner;
         Result = result;
     }
@@ -209,10 +230,14 @@ public sealed class GameState
     /// Returns a new GameState with the specified player state
     /// </summary>
     /// <exception cref="ArgumentNullException">Thrown when playerState is null</exception>
+    /// <exception cref="ArgumentException">Thrown when playerState.Id does not match playerId</exception>
     public GameState WithPlayerState(PlayerId playerId, PlayerState playerState)
     {
         if (playerState == null)
             throw new ArgumentNullException(nameof(playerState));
+
+        if (playerState.Id != playerId)
+            throw new ArgumentException($"PlayerState.Id ({playerState.Id}) must match the playerId parameter ({playerId}).", nameof(playerState));
 
         var newPlayers = new Dictionary<PlayerId, PlayerState>(Players)
         {

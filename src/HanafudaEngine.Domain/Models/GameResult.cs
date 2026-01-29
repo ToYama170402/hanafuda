@@ -39,15 +39,43 @@ public sealed class GameResult
     /// <param name="scores">The final scores for each player</param>
     /// <param name="completedYaku">The Yaku completed by each player</param>
     /// <param name="isKoiKoiWin">Whether the winner won with Koi-Koi</param>
+    /// <exception cref="ArgumentNullException">Thrown when scores or completedYaku is null</exception>
+    /// <exception cref="ArgumentException">Thrown when isKoiKoiWin is true but winner is null, or when scores contain negative values</exception>
     public GameResult(
         PlayerId? winner,
         IReadOnlyDictionary<PlayerId, int> scores,
         IReadOnlyDictionary<PlayerId, IReadOnlyList<Yaku>> completedYaku,
         bool isKoiKoiWin = false)
     {
+        if (scores == null)
+            throw new ArgumentNullException(nameof(scores));
+        if (completedYaku == null)
+            throw new ArgumentNullException(nameof(completedYaku));
+
+        // Validate that isKoiKoiWin can only be true if there's a winner
+        if (isKoiKoiWin && winner == null)
+            throw new ArgumentException("isKoiKoiWin cannot be true when winner is null.", nameof(isKoiKoiWin));
+
+        // Validate that scores are non-negative
+        foreach (var score in scores.Values)
+        {
+            if (score < 0)
+                throw new ArgumentException("Scores cannot contain negative values.", nameof(scores));
+        }
+
         Winner = winner;
-        Scores = scores ?? throw new ArgumentNullException(nameof(scores));
-        CompletedYaku = completedYaku ?? throw new ArgumentNullException(nameof(completedYaku));
+
+        // Defensive copy of scores dictionary
+        Scores = new Dictionary<PlayerId, int>(scores);
+
+        // Defensive copy of completedYaku dictionary with deep copy of yaku lists
+        var yakuCopy = new Dictionary<PlayerId, IReadOnlyList<Yaku>>();
+        foreach (var kvp in completedYaku)
+        {
+            yakuCopy[kvp.Key] = kvp.Value?.ToList().AsReadOnly() ?? (IReadOnlyList<Yaku>)Array.Empty<Yaku>();
+        }
+        CompletedYaku = yakuCopy;
+
         IsKoiKoiWin = isKoiKoiWin;
         IsDraw = winner == null;
     }

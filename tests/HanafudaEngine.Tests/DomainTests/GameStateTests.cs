@@ -299,6 +299,68 @@ public class GameStateTests
     }
 
     [Fact]
+    public void GameState_WithPlayerState_WithMismatchedPlayerId_ShouldThrowArgumentException()
+    {
+        var gameId = Guid.NewGuid();
+        var state = new GameState(
+            gameId,
+            GamePhase.PlayerTurn,
+            TurnPhase.PlayFromHand,
+            PlayerId.Player1,
+            PlayerId.Player1,
+            0);
+        var player2State = new PlayerState(PlayerId.Player2);
+
+        Assert.Throws<ArgumentException>(() =>
+            state.WithPlayerState(PlayerId.Player1, player2State));
+    }
+
+    [Fact]
+    public void GameState_Constructor_WithWinnerButNoResult_ShouldThrowArgumentException()
+    {
+        var gameId = Guid.NewGuid();
+
+        Assert.Throws<ArgumentException>(() =>
+            new GameState(
+                gameId,
+                GamePhase.GameOver,
+                TurnPhase.TurnEnd,
+                PlayerId.Player1,
+                PlayerId.Player1,
+                5,
+                winner: PlayerId.Player1,
+                result: null));
+    }
+
+    [Fact]
+    public void GameState_Constructor_WithMismatchedWinnerAndResult_ShouldThrowArgumentException()
+    {
+        var gameId = Guid.NewGuid();
+        var scores = new Dictionary<PlayerId, int>
+        {
+            { PlayerId.Player1, 15 },
+            { PlayerId.Player2, 0 }
+        };
+        var yaku = new Dictionary<PlayerId, IReadOnlyList<Yaku>>
+        {
+            { PlayerId.Player1, new List<Yaku>() },
+            { PlayerId.Player2, new List<Yaku>() }
+        };
+        var result = GameResult.CreateWin(PlayerId.Player1, scores, yaku);
+
+        Assert.Throws<ArgumentException>(() =>
+            new GameState(
+                gameId,
+                GamePhase.GameOver,
+                TurnPhase.TurnEnd,
+                PlayerId.Player1,
+                PlayerId.Player1,
+                5,
+                winner: PlayerId.Player2,
+                result: result));
+    }
+
+    [Fact]
     public void GameState_WithLastPlayedCard_ShouldReturnNewInstanceWithUpdatedCard()
     {
         var gameId = Guid.NewGuid();
