@@ -9,7 +9,7 @@ public class SpecialCardFlagTests
     {
         Assert.Equal(0, (int)SpecialCardFlag.None);
     }
-    
+
     [Fact]
     public void SpecialCardFlag_ShouldBePowerOfTwo()
     {
@@ -21,7 +21,7 @@ public class SpecialCardFlagTests
         Assert.Equal(32, (int)SpecialCardFlag.Butterfly);
         Assert.Equal(64, (int)SpecialCardFlag.RainMan);
     }
-    
+
     [Fact]
     public void SpecialCardFlag_CanBeCombined()
     {

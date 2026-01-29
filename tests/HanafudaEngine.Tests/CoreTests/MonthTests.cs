@@ -20,7 +20,7 @@ public class MonthTests
         Assert.Equal(11, (int)Month.November);
         Assert.Equal(12, (int)Month.December);
     }
-    
+
     [Fact]
     public void Month_ShouldHave12Values()
     {

@@ -10,7 +10,7 @@ public class CardTypeTests
         var types = Enum.GetValues<CardType>();
         Assert.Equal(4, types.Length);
     }
-    
+
     [Fact]
     public void CardType_ShouldContainAllTypes()
     {

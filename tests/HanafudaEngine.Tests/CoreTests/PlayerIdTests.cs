@@ -10,7 +10,7 @@ public class PlayerIdTests
         Assert.Equal(0, (int)PlayerId.Player1);
         Assert.Equal(1, (int)PlayerId.Player2);
     }
-    
+
     [Fact]
     public void PlayerId_ShouldHave2Values()
     {

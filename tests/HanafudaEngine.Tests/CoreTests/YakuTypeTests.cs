@@ -10,7 +10,7 @@ public class YakuTypeTests
         var types = Enum.GetValues<YakuType>();
         Assert.Equal(12, types.Length);
     }
-    
+
     [Fact]
     public void YakuType_ShouldContainAllBrightCardYaku()
     {
@@ -20,7 +20,7 @@ public class YakuTypeTests
         Assert.Contains(YakuType.AmeShiko, types);
         Assert.Contains(YakuType.Sanko, types);
     }
-    
+
     [Fact]
     public void YakuType_ShouldContainAllAnimalCardYaku()
     {
@@ -30,7 +30,7 @@ public class YakuTypeTests
         Assert.Contains(YakuType.Tsukimi, types);
         Assert.Contains(YakuType.Tane, types);
     }
-    
+
     [Fact]
     public void YakuType_ShouldContainAllRibbonCardYaku()
     {
@@ -39,7 +39,7 @@ public class YakuTypeTests
         Assert.Contains(YakuType.Aotan, types);
         Assert.Contains(YakuType.Tanzaku, types);
     }
-    
+
     [Fact]
     public void YakuType_ShouldContainPlainCardYaku()
     {
