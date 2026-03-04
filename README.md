@@ -12,6 +12,7 @@
 ### 仕様書
 - [こいこい仕様書](docs/hanafuda-specification.md) - こいこいのルール、札の構成、役、ゲーム進行方法の完全な仕様書
 - [実装仕様書](docs/implementation-specification.md) - C#ルールエンジンの技術仕様書（データモデル、API設計、実装ガイド）
+- [UI設計方針（推奨案）](docs/ui-design-recommendations.md) - UIを追加する場合のプラットフォーム選択・アーキテクチャ・実装方針の推奨案
 
 ### 実装計画
 - [🚀 クイックスタートガイド](docs/QUICKSTART.md) - すぐに実装を始めたい方向け（最初に読む）
