@@ -1,0 +1,39 @@
+name: Mention Copilot After Review
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  mention-copilot:
+    runs-on: ubuntu-latest
+    # Only run when the PR author is GitHub Copilot (exact bot login match)
+    if: github.event.pull_request.user.login == 'github-copilot[bot]'
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Post mention comment to Copilot
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const reviewer = context.payload.review.user.login;
+            const reviewState = context.payload.review.state;
+            const prNumber = context.payload.pull_request.number;
+
+            let stateMessage;
+            if (reviewState === 'approved') {
+              stateMessage = 'レビューが承認されました。';
+            } else if (reviewState === 'changes_requested') {
+              stateMessage = '変更が要求されました。';
+            } else {
+              stateMessage = 'レビューにコメントが追加されました。';
+            }
+
+            const body = `@copilot @${reviewer} さんによる${stateMessage}レビュー内容を確認して対応をお願いします。`;
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body,
+            });
